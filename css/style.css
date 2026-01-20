@@ -1,0 +1,29 @@
+
+body {
+  background-color: blanchedalmond;
+  font-family: system-ui, sans-serif;
+  margin: 0;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+h1 {
+  margin-top: 20px;
+  font-size: 32px;
+}
+
+section {
+    display: flex;
+}
+
+button {
+  background-color: black;
+  border-radius: 8px;
+  padding: 10px 16px;
+  border: 0;
+  color: #ffffff;
+  font-weight: 500;
+}
