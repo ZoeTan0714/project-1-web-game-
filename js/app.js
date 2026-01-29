@@ -1,6 +1,5 @@
 /*-------------------------------- Constants --------------------------------*/
-const startButton = document.getElementById('start')
-const newButton = document.getElementById('new')
+const newButton = document.getElementById('button')
 
 /*---------------------------- Variables (state) ----------------------------*/
 let pieceNumber;
@@ -20,8 +19,18 @@ let row = 3;
 let col = 3;
 let piecesize = 80; 
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 const container = document.getElementById ("gamearea");
 function createPuzzle (){
+    container.innerHTML = "";
+    const slots = [];
+    const pieces = [];
+    
 for (let i=0; i<row; i++) {
     for (let y=0; y<col; y++) {
         const slot = document.createElement("div");
@@ -44,18 +53,26 @@ for (let i=0; i<row; i++) {
         piece.dataset.correctCol = y;
         
         //Note: event listener & define the selected piece 
-        piece.addEventListener("click", () => {
+    piece.addEventListener("click", () => {
         // if (!Piece) return;            
         if (selectedPiece) {
             selectedPiece.classList.remove("selected")
         }
         selectedPiece = piece;
         piece.className = "selected";
+        message.textContent = "";
     });
-slot.appendChild(piece);
-container.appendChild(slot)
+    
+    slots.push(slot);
+    pieces.push(piece);
         }      
     } 
+
+    shuffleArray(pieces);
+    slots.forEach((slot,index) => {
+        slot.appendChild(pieces[index]);
+        container.appendChild(slot);
+    });
 }
 createPuzzle();
 
@@ -89,28 +106,74 @@ for (let i=0; i<row; i++) {
                 emptyPiece.appendChild(selectedPiece);
                 selectedPiece.classList.remove("selected");
                 selectedPiece = null;
-
-                correctPiece++;} else {
-                message.textContent = "Try again!"
-            }  
+                correctPiece++; 
             
             if (correctPiece === row*col) {
                 message.textContent = "You win!"
+            } else {
+                message.textContent = "";
+            }} 
+            else {
+                message.textContent = "Try again";
             }
         });
-         emptyContainer.appendChild(emptyPiece);
-    }}
-};
+        emptyContainer.appendChild(emptyPiece);
+    }     
+    }};
 createEmpty ()
 
 
-
-
-
-
 function resetGame () {
-        
+    container.innerHTML = "";
+    emptyContainer.innerHTML = "";
+    
+    message.textContent = "";
+
+    selectedPiece = null;
+    correctPiece = 0;
+
+    createPuzzle();
+    createEmpty();
 }
+newButton.addEventListener("click", resetGame);   
+
+
+(function() {
+  const clock = document.getElementById('timer'); 
+  const endTime = new Date().getTime() + 3*60*1000;
+
+  // store clock div to avoid repeatedly querying the DOM
+  const clock = document.getElementById('clock');
+  
+  function getRemainingTime(deadline) {
+    const currentTime = new Date().getTime();
+    return deadline - currentTime;
+  }
+  
+  // pad value with zero
+  function pad(value) {
+    return ('0' + Math.floor(value)).slice(-2);
+  }
+
+  // show time repeatedly
+  function showTime() {
+    const remainingTime = getRemainingTime(endTime);
+    const seconds = pad((remainingTime / 1000) % 60);
+    const minutes = pad((remainingTime / (60 * 1000)) % 60);
+    const hours = pad((remainingTime / (60 * 60 * 1000)) % 24);
+    const days = pad(remainingTime / (24 * 60 * 60 * 1000));
+
+    clock.innerHTML = `${days}:${hours}:${minutes}:${seconds}`;
+
+    // ensure clock only updates if a second or more is remaining
+    if (remainingTime >= 1000) {
+      requestAnimationFrame(showTime);
+    }
+  }
+  
+  // kick it all off
+  requestAnimationFrame(showTime);
+})();
 
 
 
