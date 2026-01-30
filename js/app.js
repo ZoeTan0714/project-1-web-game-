@@ -59,14 +59,14 @@ for (let i=0; i<row; i++) {
         piece.dataset.correctCol = y;
         
         //Note: event listener & define the selected piece 
-    piece.addEventListener("click", () => {
+        piece.addEventListener("click", () => {
         // if (!Piece) return;            
         if (selectedPiece) {
             selectedPiece.classList.remove("selected")
         }
         selectedPiece = piece;
         piece.className = "selected";
-        message.textContent = "";
+        message.style.display = "none";
     });
     
     slots.push(slot);
@@ -162,7 +162,10 @@ function resetGame () {
 
     if (remainingTime <= 0) {
       clock.textContent = "00:00";
-      message.textContent = "Time's up!";
+      
+      if (correctPiece !== row * col) {
+         showMessage("Game Over");
+        }
       gameActive = false; 
       return;
     }
@@ -188,27 +191,6 @@ function resetTimer () {
     endTime = null;
     gameActive = false;
 }
-
-/* ---- when time runs up ---- */
-
-const timer = document.getElementById("timer");
-
-const countdown = setInterval(() => {
-    if (!gameActive) return;
-
-    timeLeft--;
-    timer.textContent = formatTime(timeLeft);
-
-    if (timeLeft <= 0) {
-        clearInterval(countdown);
-
-    if (correctPiece !== row * col) {
-            showMessage("Game Over");
-            gameActive = false;
-        }
-    }
-}, 1000);
-
 
 /* ------ "new game" button ------- */
 newButton.addEventListener("click",() => {
