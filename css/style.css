@@ -17,6 +17,8 @@ h1 {
 
 section {
     display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 #bar {
@@ -24,18 +26,42 @@ section {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 20px; 
   width: 100%;
   padding: 10px;
 }
 
-.button {
-  background-color: black;
-  border-radius: 8px;
-  padding: 10px 16px;
+#button {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: #4e54c8; 
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+#button:hover {
+  transform: translateY(-2px);
+}
+
+#time-container {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: #4e54c8; 
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  display: flex;
   align-items: center;
-  border: 0;
-  color: #ffffff;
-  font-weight: 500;
+}
+
+#timer {
+  margin-left: 8px;
 }
 
 #gamearea,

@@ -21,12 +21,16 @@ let row = 3;
 let col = 3;
 let piecesize = 80; 
 
+
+/*------ create array to shuffle the pieces --------*/
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
+
+/*------ to create puzzle --------*/
 const container = document.getElementById ("gamearea");
 function createPuzzle (){
     container.innerHTML = "";
@@ -79,16 +83,6 @@ for (let i=0; i<row; i++) {
 createPuzzle();
 
 
-/*----- style the message first------*/
-function showMessage(text) {
-    const message = document.getElementById("message");
-    message.textContent = text;
-    message.style.display = "block";
-    setTimeout(() => {
-        message.style.display = "none";
-    },2000);
-}
-
 /*-----empty area on the right(emptyContainer // createEmpty() // class = empty-item)-----*/
 const emptyContainer = document.getElementById("emptyarea");
 function createEmpty (){
@@ -135,8 +129,6 @@ for (let i=0; i<row; i++) {
     }};
 createEmpty ()
 
-
-
 /*----------- reset game------------*/
 function resetGame () {
     container.innerHTML = "";
@@ -151,25 +143,18 @@ function resetGame () {
     createEmpty();
 }
 
-/* ------ "new game" button ------- */
-newButton.addEventListener("click",() => {
-    resetTimer();
-    resetGame();
-    startTimer();
-});   
-
-/* ----- timer -----*/ 
+/* ------- create the timer -------*/ 
   function getRemainingTime(deadline) {
     const currentTime = new Date().getTime();
     return deadline - currentTime;
   }
   
-  // pad value with zero
+    // pad value with zero
   function pad(value) {
     return ('0' + Math.floor(value)).slice(-2);
   }
 
-  // show time repeatedly
+    // show time repeatedly
   function showTime() {
     if (!gameActive) return;
 
@@ -204,6 +189,42 @@ function resetTimer () {
     gameActive = false;
 }
 
+/* ---- when time runs up ---- */
+
+const timer = document.getElementById("timer");
+
+const countdown = setInterval(() => {
+    if (!gameActive) return;
+
+    timeLeft--;
+    timer.textContent = formatTime(timeLeft);
+
+    if (timeLeft <= 0) {
+        clearInterval(countdown);
+
+    if (correctPiece !== row * col) {
+            showMessage("Game Over");
+            gameActive = false;
+        }
+    }
+}, 1000);
 
 
+/* ------ "new game" button ------- */
+newButton.addEventListener("click",() => {
+    resetTimer();
+    resetGame();
+    startTimer();
+});   
+
+
+/*----- style the message ------*/
+function showMessage(text) {
+    const message = document.getElementById("message");
+    message.textContent = text;
+    message.style.display = "block";
+    setTimeout(() => {
+        message.style.display = "none";
+    },2000);
+}
 
