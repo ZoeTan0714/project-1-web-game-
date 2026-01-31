@@ -3,7 +3,8 @@
 **Background** 
 
 This is a jigsaw puzzle as I am always a fun of puzzle games. You can choose different difficulty level if you want also. Here is a screenshot of how it looks like:
-<img width="1337" height="834" alt="image" src="https://github.com/user-attachments/assets/47db754a-05c6-43c3-bc96-b0860f3c9da0" />
+<img width="1859" height="1051" alt="image" src="https://github.com/user-attachments/assets/c4f01002-09e4-4689-86db-8b6e774e5fd7" />
+
 
 Feel free to access through the link below: 
 https://zoetan0714.github.io/The-best-puzzle-game/
